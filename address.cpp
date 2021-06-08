@@ -6,22 +6,42 @@
 
 #include <iostream>
 #include <cmath>
+#include <stdio.h>
+#include <string.h>
 
 
-std::string FormatAddress(string addresseeFunc, std::string strNumFunc,
+std::string Capper(std::string lowerCase) {
+    std::string lowerCaseNew;
+    // This gets the length of the string
+    int strLen = lowerCase.length();
+    char char_array[strLen + 1];
+    strcpy (char_array, lowerCase.c_str());
+    
+    for (int counter = 0; counter < strLen; counter++) {
+        lowerCaseNew += std::toupper(char_array[counter]);
+    }
+    
+    return lowerCaseNew;
+}
+
+
+std::string FormatAddress(std::string addresseeFunc, std::string strNumFunc,
     std::string strNameFunc, std::string postalFunc, std::string cityFunc,
     std::string provFunc, std::string aptNumFunc = "") {
 
-    std::string addresseeFunc;
-    std::string strNumFunc;
-    std::string strNameFunc;
-    std::string aptOrNoFunc;
-    std::string aptNumFunc;
-    std::string cityFunc;
-    std::string provFunc;
-    std::string postalFunc;
+    // declare new varaibles
     std::string newPostalFunc;
+    std::string addresseeFuncUpper;
     int each;
+
+    // turns everything into caps
+    addresseeFuncUpper = Capper(addresseeFunc);
+    strNumFunc = Capper(strNumFunc);
+    strNameFunc = Capper(strNameFunc);
+    postalFunc = Capper(postalFunc);
+    cityFunc = Capper(cityFunc);
+    provFunc = Capper(provFunc);
+    aptNumFunc = Capper(aptNumFunc);
 
     std::string text;
 
@@ -34,10 +54,10 @@ std::string FormatAddress(string addresseeFunc, std::string strNumFunc,
     }
     // std::cout << "this" << aptNumFunc << "this";
     if (aptNumFunc == "") {
-        text = addresseeFunc + "\n" + strNumFunc + " " + strNameFunc + "\n" +
+        text = addresseeFuncUpper + "\n" + strNumFunc + " " + strNameFunc + "\n" +
         cityFunc + " " + provFunc + "  " + newPostalFunc;
     } else {
-        text = addresseeFunc + "\n" + aptNumFunc + "-" + strNumFunc + " " +
+        text = addresseeFuncUpper + "\n" + aptNumFunc + "-" + strNumFunc + " " +
         strNameFunc + "\n" + cityFunc + " " + provFunc + "  " + newPostalFunc;
     }
 
@@ -47,7 +67,7 @@ std::string FormatAddress(string addresseeFunc, std::string strNumFunc,
 
 int main() {
     // variables
-    string addressee;
+    std::string addressee;
     std::string strNum;
     std::string strName;
     std::string aptOrNo;
@@ -59,27 +79,27 @@ int main() {
     std::string result;
 
     std::cout << "Who are you sending this to: ";
-    std::cin >> addressee;
+    getline(std::cin, addressee);
 
     std::cout << "What is the street number: ";
-    std::cin >> strNum;
+    getline(std::cin, strNum);
 
     std::cout << "What is the street name: ";
-    std::cin >> strName;
+    getline(std::cin, strName);
 
     std::cout << "Do you have an apartment(y/n): ";
-    std::cin >> aptOrNo;
+    getline(std::cin, aptOrNo);
     if (aptOrNo == "y" || aptOrNo == "Y") {
         std::cout << "What is the apartment number: ";
-        std::cin >> aptNum;
+        getline(std::cin, aptNum);;
     }
 
     std::cout << "What is the City: ";
-    std::cin >> city;
+    getline(std::cin, city);
     std::cout << "What is the Province: ";
-    std::cin >> prov;
+    getline(std::cin, prov);
     std::cout << "What is the postal code: ";
-    std::cin >> postal;
+    getline(std::cin, postal);
 
     if (aptOrNo == "y" || aptOrNo == "Y") {
         result = FormatAddress(addressee, strNum, strName,
